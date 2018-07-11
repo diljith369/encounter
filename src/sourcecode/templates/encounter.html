@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>Encounter</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+	 <link href='https://fonts.googleapis.com/css?family=Chango' rel='stylesheet'>
+	 <link href='https://fonts.googleapis.com/css?family=Allerta' rel='stylesheet'>
+
+
+<style type="text/css">
+body {
+     background-color: #333333;
+     font-family: 'Allerta';
+}
+div{
+  background-color: #333333;
+  color: #D3D3D3;
+}
+
+
+.panel-default > .panel-heading {
+
+  background-color: #333333;
+  color: #00F5FF;
+  overflow: auto;
+}
+
+.panel {
+  background-color: #333333;
+    overflow: auto;
+  }
+
+  
+
+.gtextcyan {
+        color: #00FEFB;
+        font-size: 77%;
+       }
+
+       .gtextyellow {
+        color: #FAFA37;
+        font-size: 77%;
+       }
+
+        .gtextyellowh {
+        color: #FAFA37;
+        font-size: 100%;
+       }
+
+       .gtextgreen {
+       	 color: #00ff00;
+        text-shadow: 0px 1px 0px #00ff00;
+        font-size: 90%;
+       }
+
+       .gtextred {
+        color: #ff0000;
+        text-shadow: 0px 1px 0px #ff0000;
+        font-size: 90%;
+       }
+
+.gtextpanelhead {
+          color: #3B3131	;
+          text-shadow: 0px 1px 0px #3B3131;
+          font-size: 90%;
+         }
+
+.gtext {
+        color: #00F5FF;
+        text-shadow: 0px 0px 0px #00F5FF;
+        font-size: 100%;
+       }
+       .gtextalpha {
+        color: #f0ffff	;
+        font-size: 90%;
+       }
+
+/*Gap*/
+td {
+ white-space: nowrap;
+}
+/*Gap*/
+
+</style>
+
+<script>
+	window.onload = function() {
+   
+	       	document.getElementById('cmd').style.display = 'none';
+          document.getElementById('huntid').style.display = 'none';
+          document.getElementById('cmdres').style.display = 'none';
+         
+    }
+
+</script>
+
+
+</head>
+
+<body>
+	 
+<form name="test" action="" method="post" id="cmdform" name="cmdform">
+	<input type="text" class="form-control" name="cmd" id="cmd" value="{{.Command}}">
+	<input type="text" class="form-control" name="huntid" id="huntid" value="{{.HuntId}}">
+	 <textarea rows="32" class="form-control" name="cmdres" id="cmdres">{{.Commandres}}</textarea> 
+				<!--script type="text/javascript">
+				  var wait=setTimeout("document.test.submit();",2000);
+				</script-->
+				
+				
+</form>  	
+
+</body>
+</html>

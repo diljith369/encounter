@@ -1,0 +1,125 @@
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>Encounter</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+	 <link href='https://fonts.googleapis.com/css?family=Chango' rel='stylesheet'>
+	 <link href='https://fonts.googleapis.com/css?family=Allerta' rel='stylesheet'>
+   <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
+
+<style type="text/css">
+body {
+     background-color: #3B3131;
+     color: #00FEFB;
+     font-family: 'Inconsolata', monospace;
+}
+div{
+  background-color: #3B3131;
+}
+.panel-default > .panel-heading {
+
+  background-color: #3B3131;
+  color: #00F5FF;
+  overflow: auto;
+}
+
+.panel {
+  background-color: #3B3131;
+    overflow: auto;
+    color: #00FEFB ;
+  }
+
+  
+
+.gtextcyan {
+        color: #00FEFB;
+        font-size: 77%;
+       }
+
+       .gtextyellow {
+        color: #FDBD01;
+        font-size: 77%;
+       }
+
+        .gtextyellowh {
+        color: #FAFA37;
+        font-size: 100%;
+       }
+
+       .gtextgreen {
+       	 color: #00ff00;
+        text-shadow: 0px 1px 0px #00ff00;
+        font-size: 90%;
+       }
+
+       .gtextred {
+        color: #ff0000;
+        text-shadow: 0px 1px 0px #ff0000;
+        font-size: 90%;
+       }
+
+.gtextpanelhead {
+          color: #3B3131	;
+          text-shadow: 0px 1px 0px #3B3131;
+          font-size: 90%;
+         }
+
+.gtext {
+        color: #00F5FF;
+        text-shadow: 0px 0px 0px #00F5FF;
+        font-size: 100%;
+       }
+       .gtextalpha {
+        color: #f0ffff	;
+        font-size: 90%;
+       }
+
+/*Gap*/
+td {
+ white-space: nowrap;
+}
+
+</style>
+</head>
+<body>
+  <div class="container"  style="width:100%" >
+    <div class="text-center" style="color: #FDBD01; font-family: 'Inconsolata', monospace;"><h2> Encounter Scheduled Tasks and Status Report </h2> </div>
+    <div class="container"  style="width:70%" >
+              
+              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h3 class="panel-title">
+                                    <a data-toggle="collapse" href="#networkcollapse" >Scheduled Tasks and Status</a>
+                                  </h3>
+                                </div>
+                                 <div id="networkcollapse" class="panel-collapse collapse in">
+                                   <table class="table">
+                                       <thead>
+                                         <tr class="gtextyellow">
+                                           <th>Task Name</th>
+                                           <th>Next Run Time</th>
+                                           <th>Status</th>
+                                         </tr>
+                                       </thead>
+                                       <tbody>
+                                         {{range $index := .}}
+                                           <tr >
+                                             <td class="gtextcyan">{{$index.TaskName}}</td>
+                                             <td class="gtextcyan">{{$index.NextRunTime}}</td>
+                                             <td class="gtextcyan">{{$index.Status}}</td>
+                                           </tr>
+                                          
+                                           {{end}}
+                                       </tbody>
+                                   </table>
+                                 </div>
+              </div>
+
+
+    </div>
+  </div>
+</body>
+</html>
