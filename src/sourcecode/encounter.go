@@ -264,7 +264,7 @@ func parsenetstat(netstatcmd string) {
 
 	//fmt.Println(res)
 	parseit := strings.Split(res, "\n")
-	fmt.Println("total length", len(parseit))
+	//fmt.Println("total length", len(parseit))
 	i := 4
 	for {
 		networkbinaryval = NetWorkBinary{}
@@ -290,6 +290,9 @@ func parsenetstat(netstatcmd string) {
 					//fmt.Println(remote[0])
 					//fmt.Println(remote[1])
 					networkbinaryval.RemoteIP = remote[0]
+					if networkbinaryval.RemoteIP != `127.0.0.1` {
+						networkbinaryval.MalwLink = `https://www.malwares.com/report/ip?ip=` + networkbinaryval.RemoteIP
+					}
 					networkbinaryval.RemotePort = remote[1]
 				}
 				networkbinaryval.ConnectionState = row[3]
@@ -338,9 +341,7 @@ func parseautoruns(autorunscres string) {
 	i := 6
 	for {
 
-		if i >= (len(parseit)) {
-			break
-		} else {
+		if i < (len(parseit)) {
 
 			finalstr = removenullfromstring(parseit[i])
 
@@ -367,9 +368,11 @@ func parseautoruns(autorunscres string) {
 				autoRunval.Time = removenullfromstring(parseit[i])
 				i = i + 1
 				autoRunval.VtDetection = removenullfromstring(parseit[i])
+				autoRunval.VtDetection = strings.TrimSpace(strings.Replace(autoRunval.VtDetection, "VT detection:", "", -1))
 				i = i + 1
 				autoRunval.VtPermalink = removenullfromstring(parseit[i])
-				autoRunval.VtPermalink = autoRunval.VtPermalink[20 : len(autoRunval.VtPermalink)-1]
+				autoRunval.VtPermalink = strings.TrimSpace(strings.Replace(autoRunval.VtPermalink, "VT permalink:", "", -1))
+				//autoRunval.VtPermalink = autoRunval.VtPermalink[20 : len(autoRunval.VtPermalink)-1]
 				i = i + 1
 				AutoRunVals = append(AutoRunVals, autoRunval)
 
@@ -377,7 +380,7 @@ func parseautoruns(autorunscres string) {
 				autoRunval = AutoRun{}
 				autoRunval.AppName = removenullfromstring(parseit[i])
 				i = i + 1
-				autoRunval.Commandline = removenullfromstring(parseit[i])
+				autoRunval.Description = removenullfromstring(parseit[i])
 				i = i + 1
 				autoRunval.ExecArgs = removenullfromstring(parseit[i])
 				i = i + 1
@@ -390,13 +393,15 @@ func parseautoruns(autorunscres string) {
 				autoRunval.Time = removenullfromstring(parseit[i])
 				i = i + 1
 				autoRunval.VtDetection = removenullfromstring(parseit[i])
+				autoRunval.VtDetection = strings.TrimSpace(strings.Replace(autoRunval.VtDetection, "VT detection:", "", -1))
 				i = i + 1
 				autoRunval.VtPermalink = removenullfromstring(parseit[i])
-				autoRunval.VtPermalink = autoRunval.VtPermalink[20 : len(autoRunval.VtPermalink)-1]
+				autoRunval.VtPermalink = strings.TrimSpace(strings.Replace(autoRunval.VtPermalink, "VT permalink:", "", -1))
 				i = i + 1
-
 				AutoRunVals = append(AutoRunVals, autoRunval)
 			}
+		} else {
+			break
 		}
 
 	}
@@ -471,7 +476,7 @@ func main() {
 	r.HandleFunc("/", index)
 	r.HandleFunc("/network", network)
 	r.HandleFunc("/autorun", autorun)
-	r.HandleFunc("/scheduledtasks", scheduledtasks)
+	r.HandleFunc("/schtasks", scheduledtasks)
 	r.HandleFunc("/tasklist", tasklist)
 	r.HandleFunc("/dns", dns)
 	r.HandleFunc("/logonsessions", logon)
@@ -481,8 +486,8 @@ func main() {
 		Handler: r,
 		Addr:    "0.0.0.0:7777",
 		// Good practice: enforce timeouts for servers you create!
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
+		WriteTimeout: 180 * time.Second,
+		ReadTimeout:  180 * time.Second,
 	}
 	srv.ListenAndServe()
 	//http.ListenAndServe(":7777", r)
@@ -597,6 +602,7 @@ func index(respwrt http.ResponseWriter, req *http.Request) {
 		huntid := req.Form.Get("huntid")
 		if huntid == "1" {
 			enccmdtopost.Commandres = cmdres
+
 			//greenc.Println(cmdtopost)
 			parseautoruns(cmdres)
 			yellownc.Println("\t\tReport is ready at : http://127.0.0.1:7777/autorun")
@@ -639,7 +645,7 @@ func index(respwrt http.ResponseWriter, req *http.Request) {
 
 		} else if huntid == "3" {
 			parsescheduletasks(cmdres)
-			yellownc.Println("\t\tReport is ready at : http://127.0.0.1:7777/scheduledtasks")
+			yellownc.Println("\t\tReport is ready at : http://127.0.0.1:7777/schtasks")
 			redc.Println("\t\t_____________________________________________________________")
 			/*for x := range ScheduleTaskVals {
 				//ScheduleTaskVals[x].FolderName = strings.Replace(ScheduleTaskVals[x].FolderName, "\r\n", "", -1)
